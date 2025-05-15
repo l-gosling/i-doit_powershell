@@ -45,7 +45,7 @@ $session = Connect-Idoit -ApiUrl "https://your-idoit.com/api/jsonrpc.php" -Usern
 
 ## Testing
 
-To perform API tests, the test scripts connect to the `i-doit Demo system <https://demo.i-doit.com>`_. 
+To perform API tests, the test scripts connect to the [i-doit Demo system](https://demo.i-doit.com).
 It can be retrieved from the i-doit demo system by logging in, opening the user menu by hovering over the user name, choosing 'Administration', and clicking on 'Interfaces / External data`, 'JSON-RPC API', and 'Common Settings'.
 
 ## Documentation
