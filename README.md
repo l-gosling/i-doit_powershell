@@ -12,8 +12,8 @@
 
 
 ## Introduction
-PowerShell module for interacting with the i-doit CMDB API. This module provides cmdlets for managing and retrieving information from your i-doit configuration management database.
-The i-doit PowerShell module provides a simple and secure way to interact with the i-doit API using PowerShell. It handles authentication, session management, and common CMDB operations.
+PowerShell scripts for interacting with the i-doit CMDB API. This scripts provides cmdlets for managing and retrieving information from your i-doit configuration management database.
+The i-doit PowerShell scripts provides a simple and secure way to interact with the i-doit API using PowerShell. It handles authentication, session management, and common CMDB operations.
 
 ### Prerequisites
 
