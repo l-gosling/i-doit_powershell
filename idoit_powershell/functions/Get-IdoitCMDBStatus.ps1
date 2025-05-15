@@ -16,13 +16,6 @@
 .PARAMETER apiKey
     The API key as a SecureString
 
-.OUTPUTS
-    Returns an array of PSObjects containing CMDB status details:
-    - ID
-    - Title
-    - Constant
-    - Status Type
-
 .EXAMPLE
     $apiKey = ConvertTo-SecureString "your-apikey" -AsPlainText -Force
     $status = Get-IdoitCMDBStatus -apiUrl "https://idoit.example.com/src/jsonrpc.php" `
@@ -34,9 +27,6 @@
     Author         : l-gosling
     Prerequisite   : PowerShell 7.0 or higher
     Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/cmdb.status.html#cmdbstatusread
-
-    Changelog:
-    2025-04-16 - Initial version (lgo13)
 #>
 function Get-IdoitCMDBStatus {
     [CmdletBinding()]

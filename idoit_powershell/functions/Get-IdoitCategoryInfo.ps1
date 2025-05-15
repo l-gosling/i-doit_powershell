@@ -19,9 +19,6 @@
 .PARAMETER category
     The category identifier to retrieve information about (e.g., "C__CATG__GLOBAL")
 
-.OUTPUTS
-    Returns a PSObject containing the category metadata including attributes and configurations
-
 .NOTES
     File Name      : Get-IdoitCategoryInfo.ps1
     Author         : l-gosling
