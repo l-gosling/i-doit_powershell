@@ -16,17 +16,17 @@
 .PARAMETER apiKey
     The API key as a SecureString
 
-.EXAMPLE
-    $apiKey = ConvertTo-SecureString "your-apikey" -AsPlainText -Force
-    $status = Get-IdoitCMDBStatus -apiUrl "https://idoit.example.com/src/jsonrpc.php" `
-                                 -sessionId "abc123" `
-                                 -apiKey $apiKey
-
 .NOTES
     File Name      : Get-IdoitCMDBStatus.ps1
     Author         : l-gosling
     Prerequisite   : PowerShell 7.0 or higher
     Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/cmdb.status.html#cmdbstatusread
+
+.EXAMPLE
+    $apiKey = ConvertTo-SecureString "your-apikey" -AsPlainText -Force
+    $status = Get-IdoitCMDBStatus -apiUrl "https://idoit.example.com/src/jsonrpc.php" `
+                                 -sessionId "abc123" `
+                                 -apiKey $apiKey
 #>
 function Get-IdoitCMDBStatus {
     [CmdletBinding()]

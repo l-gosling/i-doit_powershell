@@ -19,22 +19,11 @@
 .PARAMETER id
     The numeric ID of the i-doit object to query contacts for.
 
-.OUTPUTS
-    Returns an array of PSObjects containing contact assignments:
-    - Contact ID
-    - Contact Name
-    - Role
-    - Primary flag
-    - Description
-
 .NOTES
     File Name      : Get-IdoitObjectContactAssignment.ps1
     Author         : l-gosling
     Prerequisite   : PowerShell, active i-doit API session
     Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/cmdb.category.html#cmdbcategoryread
-
-    Changelog:
-    2025-04-15 - Initial version (lgo13)
     
 .EXAMPLE
     $apiKey = ConvertTo-SecureString "yourApiKey" -AsPlainText -Force

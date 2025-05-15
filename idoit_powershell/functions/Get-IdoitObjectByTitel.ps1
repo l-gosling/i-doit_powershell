@@ -19,22 +19,11 @@
 .PARAMETER title
     The title to search for in the CMDB objects.
 
-.OUTPUTS
-    Returns an array of PSObjects containing matching objects with their details:
-    - ID
-    - Title
-    - Type
-    - Status
-    - Created/Updated dates
-
 .NOTES
     File Name      : Get-IdoitObjectByTitle.ps1
     Author         : l-gosling
     Prerequisite   : PowerShell, active i-doit API session
     Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/cmdb.objects.html#cmdbobjectsread
-
-    Changelog:
-    2025-04-15 - Initial version (lgo13)
     
 .EXAMPLE
     $apiKey = ConvertTo-SecureString "yourApiKey" -AsPlainText -Force

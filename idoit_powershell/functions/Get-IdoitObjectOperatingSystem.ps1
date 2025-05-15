@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Retrieves contact assignments for an i-doit object.
+    Retrieves operating system information for an i-doit object.
 
 .DESCRIPTION
-    This function retrieves all contact assignments (roles) for a specified object
-    from the i-doit CMDB. It requires an active API session and returns the 
-    contact relationships configured for the object.
+    This function retrieves operating system details from the i-doit CMDB for a 
+    specified object. It returns information such as OS type, version, and other
+    system-related configurations.
 
 .PARAMETER apiUrl
     The URL of the i-doit API endpoint (e.g., "https://idoit.example.com/src/jsonrpc.php")
@@ -17,31 +17,20 @@
     The API key as a SecureString.
 
 .PARAMETER id
-    The numeric ID of the i-doit object to query contacts for.
-
-.OUTPUTS
-    Returns an array of PSObjects containing contact assignments:
-    - Contact ID
-    - Contact Name
-    - Role
-    - Primary flag
-    - Description
+    The numeric ID of the i-doit object to query operating system information for.
 
 .NOTES
-    File Name      : Get-IdoitObjectContactAssignment.ps1
+    File Name      : Get-IdoitObjectOperatingSystem.ps1
     Author         : l-gosling
     Prerequisite   : PowerShell, active i-doit API session
     Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/cmdb.category.html#cmdbcategoryread
-
-    Changelog:
-    2025-04-15 - Initial version (lgo13)
     
 .EXAMPLE
     $apiKey = ConvertTo-SecureString "yourApiKey" -AsPlainText -Force
-    Get-IdoitObjectContactAssignment -apiUrl "https://idoit.example.com/api/jsonrpc.php" `
-                                   -sessionId "abc123" `
-                                   -apiKey $apiKey `
-                                   -id 540
+    Get-IdoitObjectOperatingSystem -apiUrl "https://idoit.example.com/api/jsonrpc.php" `
+                                  -sessionId "abc123" `
+                                  -apiKey $apiKey `
+                                  -id 540
 #>
 function Get-IdoitObjectOperatingSystem {
     param (
