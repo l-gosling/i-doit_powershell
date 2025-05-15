@@ -1,75 +1,103 @@
 <#
 .SYNOPSIS
-    Retrieves category information for an i-doit object.
+    Sends requests to the i-doit API using JSON-RPC 2.0 protocol.
 
 .DESCRIPTION
-    This function retrieves category information for a specified i-doit object 
-    using the object ID and category name. It requires an active API session
-    and returns the category details as a response object.
+    This function sends authenticated requests to the i-doit API using:
+    - Session-based authentication via X-RPC-Auth-Session header
+    - JSON-RPC 2.0 protocol formatting
+    - Dynamic request IDs using GUIDs
+    - Configurable API methods and parameters
+    - Error handling for both HTTP and API-level errors
 
 .PARAMETER apiUrl
-    The URL of the i-doit API endpoint.
+    The URL of the i-doit API endpoint (e.g., "https://idoit.example.com/src/jsonrpc.php")
 
 .PARAMETER sessionId
-    The active session ID for API authentication.
+    The active session ID obtained from Connect-Idoit
 
-.PARAMETER apiKey
-    The API key as a SecureString.
+.PARAMETER method
+    The i-doit API method to call (e.g., "cmdb.objects.read", "cmdb.category.read")
 
-.PARAMETER id
-    The numeric ID of the i-doit object to query.
+.PARAMETER params
+    Hashtable containing the required parameters for the API method
 
-.PARAMETER category
-    The category name to retrieve. Defaults to "C__CATG__GLOBAL".
+.OUTPUTS
+    Returns the result property from the API response. Throws an error if the request fails.
 
-.NOTES
-    File Name      : Get-IdoitObjectCategory.ps1
-    Author         : l-gosling
-    Prerequisite   : PowerShell, active i-doit API session
-    Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/index.html#cmdocategoryread
-    
 .EXAMPLE
-    $apiKey = ConvertTo-SecureString "yourApiKey" -AsPlainText -Force
-    Get-IdoitObjectCategory -apiUrl "https://idoit.example.com/api/jsonrpc.php" -sessionId "abc123" -apiKey $apiKey -id 540
-#>
-function Get-IdoitObjectCategory {
-    param (
-        [Parameter(Mandatory = $true)]
-        [String]$apiUrl,
-        
-        [Parameter(Mandatory = $true)]
-        [String]$sessionId,
-        
-        [Parameter(Mandatory = $true)]
-        [SecureString]$apiKey,
-        
-        [Parameter(Mandatory = $true)]
-        [int]$id,
-        
-        [Parameter(Mandatory = $false)]
-        [string]$category = "C__CATG__GLOBAL"
-    )
-
-    # Create parameter hashtable for API request
     $params = @{
-        "objID"    = $id
-        "category" = $category
-        "apikey"   = (New-Object PSCredential 0, $apiKey).GetNetworkCredential().Password
+        "id" = 123
+        "apikey" = "your-apikey"
         "language" = "en"
     }
+    
+    $response = Invoke-Idoit -apiUrl "https://idoit.example.com/api/jsonrpc.php" `
+                            -sessionId "abc123" `
+                            -method "cmdb.category.read" `
+                            -params $params
 
-    # Send request to i-doit API and handle any errors
+.NOTES
+    File Name      : Invoke-Idoit.ps1
+    Author         : l-gosling
+    Prerequisite   : PowerShell 7.0 or higher
+    Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/index.html
+
+    Changelog:
+    2025-02-07 - Initial version (lgo13)
+    2025-04-17 - Added error handling, increased JSON depth, implemented GUID for request ID (lgo13)
+#>
+function Invoke-Idoit {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$apiUrl,
+        
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$sessionId,
+        
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$method,
+        
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNull()]
+        [hashtable]$params
+    )
+
+    # Create request headers with session authentication
+    $headers = @{
+        "X-RPC-Auth-Session" = $sessionId
+    }
+
+    # Build JSON-RPC 2.0 compliant request body
+    $body = @{
+        "version" = "2.0"
+        "method"  = $method
+        "params"  = $params
+        "id"      = [Guid]::NewGuid().ToString()
+    } | ConvertTo-Json -Depth 10
+
+    # Send request to API and handle any network/HTTP errors
     try {
-        $response = Invoke-Idoit -ApiUrl $apiUrl `
-                                -SessionId $sessionId `
-                                -Method "cmdb.category.read" `
-                                -Params $params `
-                                -ErrorAction Stop
+        $response = Invoke-RestMethod -Uri $apiUrl `
+                                    -Method Post `
+                                    -ContentType "application/json" `
+                                    -Headers $headers `
+                                    -Body $body `
+                                    -ErrorAction Stop
     }
     catch {
-        throw $_
+        throw "API request failed: $_"
     }
 
-    # Return the category information
-    return $response
+    # Check for API-level errors in the response
+    if ($response.error) {
+        throw "API error: $($response.error.message)"
+    }
+
+    # Return just the result data from the response
+    return $response.result
 }
