@@ -41,7 +41,7 @@
     File Name      : Invoke-Idoit.ps1
     Author         : l-gosling
     Prerequisite   : PowerShell 7.0 or higher
-    Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/index.html
+    Source         : https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/index.html
 
     Changelog:
     2025-02-07 - Initial version (lgo13)

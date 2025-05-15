@@ -51,7 +51,7 @@ It can be retrieved from the i-doit demo system by logging in, opening the user 
 ## Documentation
 
 For detailed documentation about the i-doit API, please visit:
-[i-doit API Documentation](https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/index.html)
+[i-doit API Documentation](https://kb.i-doit.com/de/i-doit-add-ons/api/methoden/v1/index.html)
 
 ## Disclaimer and License
 This tool is provided as-is, with no warranties.
