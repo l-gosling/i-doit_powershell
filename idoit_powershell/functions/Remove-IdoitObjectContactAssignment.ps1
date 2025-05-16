@@ -29,7 +29,7 @@
     $apiKey = ConvertTo-SecureString "your-apikey" -AsPlainText -Force
     $id = 123
     $contactId = 456
-    $response = Remove-IdoitObjectContactAssigment -apiUrl $apiUrl -sessionId $sessionId -apiKey $apiKey -id $id -contactId $contactId
+    $response = Remove-IdoitObjectContactAssignment -apiUrl $apiUrl -sessionId $sessionId -apiKey $apiKey -id $id -contactId $contactId
 
     .NOTES
     changelog
@@ -45,22 +45,22 @@ function Remove-IdoitObjectContactAssignment {
 
     )
 
-    #check if there are currente contact assigments
+    #check if there are currente contact assignments
     try {
         $contacts = Get-IdoitObjectContactAssgiment -apiUrl $apiUrl -sessionId $sessionId -apiKey $apiKey -id $id
     }
     catch {
-        throw "Cant read contact assigments. The following error occurred: $_"
+        throw "Cant read contact assignments. The following error occurred: $_"
     }
 
     #get specific contact assignment
-    $contactAssigment = $contacts | Where-Object { $_.contact_object.id -eq $contactId } 
+    $contactAssignment = $contacts | Where-Object { $_.contact_object.id -eq $contactId } 
 
     #define the parameters
     $params = @{
         "object" = $id
         "category" = "C__CATG__CONTACT"
-        "entry" = $contactAssigment.id
+        "entry" = $contactAssignment.id
         "apikey" = (New-Object PSCredential 0, $apiKey).GetNetworkCredential().Password
         "language" = "en"
     }
