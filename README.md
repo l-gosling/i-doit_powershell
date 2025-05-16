@@ -34,15 +34,18 @@ This function serves as the basis for all other functions (excluded is session m
 ## Quick Start
 
 1. Clone this repository
-2. Run the credential setup script:
+2. Create encrypted credential file
+```powershell
+.\idoit_powershell\creds\New-idoitCredentialFile.ps1
+```
+3. Run the credential setup script:
 ```powershell
 foreach ($PSScriptFile in (Get-ChildItem -Path .\idoit_powershell\functions\)) {
     . $PSScriptFile.FullName
 }
 ```
-3. Import the module and connect to your i-doit instance:
+4. Import the module and connect to your i-doit instance:
 ```powershell
-Import-Module .\idoit_powershell
 $creds = Get-IdoitCredentials -CredsPath ".\idoit_powershell\creds"
 $session = Connect-Idoit -ApiUrl "https://your-idoit.com/api/jsonrpc.php" -Username $creds.Username -Password $creds.Password -ApiKey $creds.ApiKey
 ```
